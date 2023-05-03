@@ -12,18 +12,18 @@ spec:
         namespace: hk-guestbook
   template:
     metadata:
-      name: '{{{{applicationName}}}}'
+      name: '{{`{{applicationName}}`}}'
       namespace: argocd
       finalizers:
       - resources-finalizer.argocd.argoproj.io
     spec:
       project: default
       source:
-        path: '{{{{path}}}}'
+        path: '{{`{{path}}`}}'
         repoURL: {{ .Values.spec.source.repoURL }}
         targetRevision: {{ .Values.spec.source.targetRevision }}
         plugin:
           name: kustomized-helm
       destination:
-        namespace: '{{{{namespace}}}}'
+        namespace: '{{`{{namespace}}`}}'
         server: {{ .Values.spec.destination.server }}
