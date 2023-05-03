@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: guestbook-applicationset
+spec:
+  generators:
+  - list:
+      elements:
+      - appName: hk-guestbook
+        path: kustomized-helm
+        namespace: hk-guestbook
+  template:
+    metadata:
+      name: '{{appName}}'
+      namespace: argocd
+      finalizers:
+      - resources-finalizer.argocd.argoproj.io
+    spec:
+      project: default
+      source:
+        path: kustomized-helm
+        repoURL: {{ .Values.spec.source.repoURL }}
+        targetRevision: {{ .Values.spec.source.targetRevision }}
+        plugin:
+          name: kustomized-helm
+      destination:
+        namespace: '{{namespace}}'
+        server: {{ .Values.spec.destination.server }}
