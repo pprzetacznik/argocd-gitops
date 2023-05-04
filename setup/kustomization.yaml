@@ -1,0 +1,5 @@
+resources:
+- github.com/argoproj/argo-cd//manifests/cluster-install?ref=v1.0.1
+# - clusters-secrets.yaml
+# - repos-secrets.yaml
+
